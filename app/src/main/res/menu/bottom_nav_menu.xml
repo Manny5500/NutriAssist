@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_bns_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/dashboard" />
+
+    <item
+        android:id="@+id/navigation_bns_data"
+        android:icon="@drawable/database"
+        android:title="@string/data" />
+
+    <item
+        android:id="@+id/navigation_bns_account"
+        android:icon="@drawable/user"
+        android:title="@string/account" />
+
+</menu>

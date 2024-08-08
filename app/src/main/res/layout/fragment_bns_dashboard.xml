@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.projectcontact.ui.bns.bns_dashboard.BNSDashboardViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.bns.bns_dashboard.BNSDashboardFragment">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/barangayView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintVertical_weight="1"
+                    app:cardBackgroundColor="@color/blueColor"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/topView"
+                    app:cardCornerRadius="15sp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/txViews"
+                            android:layout_width="0dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:layout_constraintHorizontal_weight="3.5"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/imgViews">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintVertical_weight="0.5"
+                                android:id="@+id/textDateLayout"
+                                app:layout_constraintBottom_toTopOf="@id/barText"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent">
+
+                                <TextView
+                                    android:id="@+id/dateText"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    app:layout_constraintHorizontal_weight="9"
+                                    android:text="Date"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    app:layout_constraintTop_toBottomOf="@id/textDateLayout"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/dateMenu" />
+
+                                <ImageView
+                                    android:src="@drawable/more"
+                                    android:id="@+id/dateMenu"
+                                    app:tint="@color/white"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    app:layout_constraintHorizontal_weight="1"
+                                    app:layout_constraintStart_toEndOf="@id/dateText"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toTopOf="@id/dateText" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/barText"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintVertical_weight="1"
+                                android:textSize="22sp"
+                                android:text="Barangay"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                app:layout_constraintTop_toBottomOf="@id/textDateLayout"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/namText" />
+
+                            <TextView
+                                android:id="@+id/namText"
+                                app:layout_constraintVertical_weight="1.5"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:textSize="28sp"
+                                android:text="..."
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                app:layout_constraintTop_toBottomOf="@id/barText"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imgViews"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:layout_constraintHorizontal_weight="1.5"
+                            android:layout_marginStart="5dp"
+                            android:layout_height="match_parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/txViews"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="3dp"
+                            android:src="@drawable/house" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/topView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintVertical_weight="2.5"
+                    app:layout_constraintTop_toBottomOf="@+id/barangayView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/bottomView">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lTView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        app:layout_constraintVertical_weight="2.5"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/rTView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/polView"
+                            android:layout_width="match_parent"
+                            android:layout_marginBottom="5dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/chilView"
+                            app:cardCornerRadius="15sp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:background="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/polHead"
+                                    style="@style/TextHeaderSplit"
+                                    android:text="Population"
+                                    app:layout_constraintVertical_weight="1.5"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toTopOf="@id/polBod"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/polBod"
+                                    style="@style/TextBodySplit"
+                                    android:text="@{String.valueOf(viewModel.populationCount)}"
+                                    app:layout_constraintVertical_weight="2.5"
+                                    app:layout_constraintTop_toBottomOf="@id/polHead"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/chilView"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintTop_toBottomOf="@id/polView"
+                            app:layout_constraintStart_toStartOf="@id/polView"
+                            app:layout_constraintEnd_toEndOf="@id/polView"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:cardCornerRadius="15sp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:background="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/chilHead"
+                                    style="@style/TextHeaderSplit"
+                                    android:text="Child"
+                                    app:layout_constraintVertical_weight="1.5"
+                                    app:layout_constraintBottom_toTopOf="@id/chilBod"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/chilBod"
+                                    style="@style/TextBodySplit"
+                                    android:text="@{String.valueOf(viewModel.childCount)}"
+                                    app:layout_constraintVertical_weight="2.5"
+                                    app:layout_constraintTop_toBottomOf="@id/chilHead"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/rTView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintHorizontal_weight="2"
+                        app:layout_constraintVertical_weight="1"
+                        app:cardBackgroundColor="@color/design_default_color_primary"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/lTView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:cardCornerRadius="15sp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:background="@color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/rTHead"
+                                android:layout_width="match_parent"
+                                android:background="@color/blueColor"
+                                android:layout_height="0dp"
+                                app:layout_constraintVertical_weight="1.5"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/rTBod"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Normal vs Malnourished"
+                                    android:textStyle="bold"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/white"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/rTBod"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintVertical_weight="5.5"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/rTHead"
+                                app:layout_constraintBottom_toBottomOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bottomView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintVertical_weight="3"
+                    app:layout_constraintTop_toBottomOf="@+id/topView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/falView"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cardBackgroundColor="@color/blueColor"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/vulView"
+                        app:layout_constraintBottom_toTopOf="@id/gBView"
+                        app:cardCornerRadius="15sp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/falHead"
+                                app:layout_constraintVertical_weight="2"
+                                style="@style/TextHeaderSquare"
+                                android:text="Families"
+                                app:layout_constraintBottom_toTopOf="@id/falDesc"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/falDesc"
+                                style="@style/TextSubHeaderSquare"
+                                app:layout_constraintVertical_weight="1.33"
+                                android:text="Examined"
+                                app:layout_constraintTop_toBottomOf="@id/falHead"
+                                app:layout_constraintBottom_toTopOf="@id/falCont"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/falCont"
+                                style="@style/TextBodySquare"
+                                android:text="@{String.valueOf(viewModel.familyCount)}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/falDesc"
+                                app:layout_constraintVertical_weight="2.67" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/vulView"
+                        android:layout_marginStart="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cardBackgroundColor="@color/blueColor"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/falView"
+                        app:layout_constraintBottom_toBottomOf="@id/falView"
+                        app:cardCornerRadius="15sp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/vulHead"
+                                style="@style/TextHeaderSquare"
+                                android:text="Vulnerable"
+                                app:layout_constraintVertical_weight="2"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/vulDesc"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/vulDesc"
+                                style="@style/TextSubHeaderSquare"
+                                app:layout_constraintVertical_weight="1.33"
+                                android:text="Estimated"
+                                app:layout_constraintTop_toBottomOf="@id/vulHead"
+                                app:layout_constraintBottom_toTopOf="@id/vulCont"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/vulCont"
+                                style="@style/TextBodySquare"
+                                android:text="@{String.valueOf(viewModel.vulnerableCount)}"
+                                app:layout_constraintVertical_weight="2.67"
+                                app:layout_constraintTop_toBottomOf="@id/vulDesc"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/gBView"
+                        android:layout_marginEnd="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cardBackgroundColor="@color/blueColor"
+                        app:layout_constraintTop_toBottomOf="@id/falView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/fPView"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:cardCornerRadius="15sp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/gBHead"
+                                style="@style/TextHeaderSquare"
+                                android:text="Gulayan sa Bakuran"
+                                android:textSize="18sp"
+                                app:layout_constraintVertical_weight="2"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/gBDesc"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/gBDesc"
+                                style="@style/TextSubHeaderSquare"
+                                app:layout_constraintVertical_weight="1.33"
+                                android:text="Beneficiaries"
+                                app:layout_constraintTop_toBottomOf="@id/gBHead"
+                                app:layout_constraintBottom_toTopOf="@id/gBCont"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/gBCont"
+                                style="@style/TextBodySquare"
+                                android:text="@{String.valueOf(viewModel.gulayanCount)}"
+                                app:layout_constraintVertical_weight="2.67"
+                                app:layout_constraintTop_toBottomOf="@id/gBDesc"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/fPView"
+                        android:layout_marginStart="8dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cardBackgroundColor="@color/blueColor"
+                        app:layout_constraintTop_toTopOf="@id/gBView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/gBView"
+                        app:layout_constraintBottom_toBottomOf="@id/gBView"
+                        app:cardCornerRadius="15sp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/fPHead"
+                                style="@style/TextHeaderSquare"
+                                android:text="Feeding Program"
+                                android:textSize="18sp"
+                                app:layout_constraintVertical_weight="2"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/fPDesc"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/fPDesc"
+                                style="@style/TextSubHeaderSquare"
+                                app:layout_constraintVertical_weight="1.33"
+                                android:text="Beneficiaries"
+                                app:layout_constraintTop_toBottomOf="@id/fPHead"
+                                app:layout_constraintBottom_toTopOf="@id/fPCont"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                            <TextView
+                                android:id="@+id/fPCont"
+                                style="@style/TextBodySquare"
+                                android:text="@{String.valueOf(viewModel.feedingCount)}"
+                                app:layout_constraintVertical_weight="2.67"
+                                app:layout_constraintTop_toBottomOf="@id/fPDesc"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ProgressBar
+                    android:visibility="invisible"
+                    android:id="@+id/progressBar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

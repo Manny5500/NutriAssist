@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_bns_dashboard">
+
+    <fragment
+        android:id="@+id/navigation_bns_data"
+        android:name="com.example.projectcontact.ui.bns.bns_data.BNSDataFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_bns_data" />
+
+    <fragment
+        android:id="@+id/navigation_bns_dashboard"
+        android:name="com.example.projectcontact.ui.bns.bns_dashboard.BNSDashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_bns_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_bns_account"
+        android:name="com.example.projectcontact.ui.bns.bns_account.BNSAccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_bns_account" />
+</navigation>

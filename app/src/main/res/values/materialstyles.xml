@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MaterialTextInputBase" parent="Widget.Material3.TextInputLayout.FilledBox.Dense">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">59dp</item>
+    </style>
+
+    <style name="MaterialTextInputSingle" parent="MaterialTextInputBase">
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="MaterialTextInputLeft" parent="MaterialTextInputBase">
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="MaterialTextInputRight" parent="MaterialTextInputBase">
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+    </style>
+
+    <style name="MaterialTextInputEdit">
+        <item name="android:background">#E6FFFFFF</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="MaterialAutoCompleteBase" parent="Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">59dp</item>
+    </style>
+
+    <style name="MaterialAutoCompleteSingle" parent = "MaterialAutoCompleteBase">
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="MaterialAutoCompleteLeft" parent="MaterialAutoCompleteBase">
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="MaterialAutoCompleteRight" parent="MaterialAutoCompleteBase">
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+    </style>
+
+
+
+</resources>

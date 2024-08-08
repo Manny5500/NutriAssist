@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ProjectContact</string>
+    <string name="parent_info">Parent Info</string>
+    <string name="title_activity_bns">BNS</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="data">Data</string>
+    <string name="account">Account</string>
+    <string name="expected_date_of_visit">Expected Date of Visit</string>
+    <string name="sex">Sex</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="height_cm">Height (cm)</string>
+    <string name="weight_kg">Weight (kg)</string>
+    <string name="child_s_last_name">Child\'s Last Name</string>
+    <string name="child_s_middle_name">Child\'s Middle Name</string>
+    <string name="child_s_first_name">Child\'s First Name</string>
+</resources>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.projectcontact.ui.add_parent.AddParentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/nutriassist_bg_"
+        tools:context=".ui.add_parent.AddParent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/TitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/textParentfirstNameLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txtTitleChild"
+                style="@style/TextTitle"
+                android:gravity="left|center"
+                android:text="Add Parent Info"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textParentfirstNameLayout"
+            style="@style/MaterialTextInputSingle"
+            android:hint="First Name"
+            app:error = "@{viewModel.errorFirstName}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TitleLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:text="@={viewModel.parent.parentFirstName}"
+                clearErrorOnTextChange="@{textParentfirstNameLayout}"
+                app:error = "@{viewModel.errorFirstName}"
+                android:id="@+id/textParentFirstName"
+                style="@style/MaterialTextInputEdit" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textParentMiddleNameLayout"
+            style="@style/MaterialTextInputLeft"
+            android:hint="Middle Name"
+            app:error = "@{viewModel.errorMiddleName}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textParentLastNameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textParentfirstNameLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:text="@={viewModel.parent.parentMiddleName}"
+                clearErrorOnTextChange="@{textParentMiddleNameLayout}"
+                app:error = "@{viewModel.errorMiddleName}"
+                android:id="@+id/textParentMiddleName"
+                style="@style/MaterialTextInputEdit" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textParentLastNameLayout"
+            style="@style/MaterialTextInputRight"
+            android:hint="Last Name"
+            app:error = "@{viewModel.errorLastName}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@id/textParentMiddleNameLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textParentMiddleNameLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                clearErrorOnTextChange="@{textParentLastNameLayout}"
+                app:error = "@{viewModel.errorLastName}"
+                android:text="@={viewModel.parent.parentLastName}"
+                android:id="@+id/textParentLastName"
+                style="@style/MaterialTextInputEdit"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textGmailLayout"
+            style="@style/MaterialTextInputSingle"
+            android:hint="Gmail"
+            app:error = "@{viewModel.errorGmail}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textParentLastNameLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                clearErrorOnTextChange="@{textGmailLayout}"
+                app:error = "@{viewModel.errorGmail}"
+                android:text="@={viewModel.parent.gmail}"
+                style="@style/MaterialTextInputEdit"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textHouseNumberLayout"
+            style="@style/MaterialTextInputLeft"
+            android:hint="House Number"
+            app:error = "@{viewModel.errorHouseNumber}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textGmailLayout"
+            app:layout_constraintEnd_toStartOf="@id/textSitioLayout">
+            <com.google.android.material.textfield.TextInputEditText
+                android:text="@={viewModel.parent.houseNumber}"
+                clearErrorOnTextChange="@{textHouseNumberLayout}"
+                app:error = "@{viewModel.errorHouseNumber}"
+                style="@style/MaterialTextInputEdit"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textSitioLayout"
+            style="@style/MaterialAutoCompleteRight"
+            android:hint="Sitio"
+            android:inputType="text"
+            app:error = "@{viewModel.errorSitio}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@id/textHouseNumberLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textHouseNumberLayout">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:text="@={viewModel.parent.sitio}"
+                clearErrorOnTextChange="@{textSitioLayout}"
+                app:error = "@{viewModel.errorSitio}"
+                spinnerAdapter="@{1}"
+                android:focusable="false"
+                style="@style/MaterialTextInputEdit"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textIncomeLayout"
+            style="@style/MaterialAutoCompleteSingle"
+            android:hint="Monthly Household Income"
+            app:error = "@{viewModel.errorMonthlyIncome}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textSitioLayout">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                clearErrorOnTextChange="@{textIncomeLayout}"
+                app:error = "@{viewModel.errorMonthlyIncome}"
+                android:text="@={viewModel.parent.monthlyIncome}"
+                spinnerAdapter="@{3}"
+                android:focusable="false"
+                style="@style/MaterialTextInputEdit"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textContactLayout"
+            android:hint="Contact No"
+            style="@style/MaterialTextInputSingle"
+            app:error = "@{viewModel.errorContactNo}"
+            app:errorIconTint="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textIncomeLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                clearErrorOnTextChange="@{textContactLayout}"
+                app:error = "@{viewModel.errorContactNo}"
+                android:text="@={viewModel.parent.contactNo}"
+                android:inputType="number"
+                style="@style/MaterialTextInputEdit"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="#51ADE5"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical|start"
+            android:text="Next"
+            android:drawableRight="@drawable/baseline_arrow_right_alt_24"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/textContactLayout"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blueColor"
+            android:text="Parent Data Exist?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/btnNext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:id="@+id/pDExist">
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

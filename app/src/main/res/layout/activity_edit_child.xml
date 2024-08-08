@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.projectcontact.ui.update_child.EditChildViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/nutriassist_bg_"
+        tools:context=".ui.update_child.EditChild">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtTitleChild"
+                    android:layout_width="350dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Edit Child Data"
+                    android:gravity="center"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textChildfirstNameLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textChildfirstNameLayout"
+                    android:hint="Child's First Name"
+                    style="@style/MaterialTextInputSingle"
+                    app:error = "@{viewModel.errorFirstName}"
+                    app:errorIconTint="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTitleChild">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textChildfirstName"
+                        style="@style/MaterialTextInputEdit"
+                        android:text="@={viewModel.child.childFirstName}"
+                        app:error = "@{viewModel.errorFirstName}"
+                        clearErrorOnTextChange="@{textChildfirstNameLayout}"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textChildMiddleNameLayout"
+                    android:hint="Child's Middle Name"
+                    app:error = "@{viewModel.errorMiddleName}"
+                    app:errorIconTint="@android:color/transparent"
+                    app:layout_constraintEnd_toStartOf="@id/textChildLastNameLayout"
+                    style="@style/MaterialTextInputLeft"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textChildfirstNameLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        clearErrorOnTextChange="@{textChildMiddleNameLayout}"
+                        app:error="@{viewModel.errorMiddleName}"
+                        android:text="@={viewModel.child.childMiddleName}"
+                        android:id="@+id/textChildMiddleName"
+                        style="@style/MaterialTextInputEdit" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textChildLastNameLayout"
+                    style="@style/MaterialTextInputRight"
+                    app:error = "@{viewModel.errorLastName}"
+                    app:errorIconTint="@android:color/transparent"
+                    android:hint="Child's Last Name"
+                    app:layout_constraintStart_toEndOf="@id/textChildMiddleNameLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textChildMiddleNameLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        clearErrorOnTextChange="@{textChildLastNameLayout}"
+                        app:error="@{viewModel.errorLastName}"
+                        android:text="@={viewModel.child.childLastName}"
+                        android:id="@+id/textChildLastName"
+                        style="@style/MaterialTextInputEdit"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textHeightLayout"
+                    android:hint="Height (cm)"
+                    style="@style/MaterialTextInputLeft"
+                    app:error = "@{viewModel.errorHeight}"
+                    app:errorIconTint="@android:color/transparent"
+                    app:layout_constraintEnd_toStartOf="@id/textWeightLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textChildMiddleNameLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        clearErrorOnTextChange="@{textHeightLayout}"
+                        app:error="@{viewModel.errorHeight}"
+                        android:text="@={viewModel.child.height}"
+                        android:id="@+id/textHeight"
+                        style="@style/MaterialTextInputEdit"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textWeightLayout"
+                    android:hint="Weight (kg)"
+                    app:error = "@{viewModel.errorWeight}"
+                    app:errorIconTint="@android:color/transparent"
+                    style="@style/MaterialTextInputRight"
+                    app:layout_constraintStart_toEndOf="@id/textHeightLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textHeightLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        clearErrorOnTextChange="@{textWeightLayout}"
+                        app:error="@{viewModel.errorWeight}"
+                        android:text="@={viewModel.child.weight}"
+                        android:id="@+id/textWeight"
+                        android:inputType="numberDecimal"
+                        style="@style/MaterialTextInputEdit"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textExpectedDateLayout"
+                    android:hint="Expected Date of Visit"
+                    style="@style/MaterialTextInputSingle"
+                    app:error = "@{viewModel.errorExpectedDate}"
+                    app:errorIconTint="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textHeightLayout"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        app:error="@{viewModel.errorExpectedDate}"
+                        android:text="@={viewModel.child.expectedDate}"
+                        clearErrorOnTextChange="@{textExpectedDateLayout}"
+                        android:id="@+id/textExpectedDate"
+                        android:focusable="false"
+                        android:inputType="none"
+                        style="@style/MaterialTextInputEdit"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textSexLayout"
+                    android:hint="Sex"
+                    style="@style/MaterialAutoCompleteLeft"
+                    app:error = "@{viewModel.errorSex}"
+                    app:errorIconTint="@android:color/transparent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/textBDateLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/textExpectedDateLayout">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:text="@={viewModel.child.sex}"
+                        clearErrorOnTextChange="@{textSexLayout}"
+                        app:error="@{viewModel.errorSex}"
+                        spinnerAdapter="@{2}"
+                        style="@style/MaterialTextInputEdit"
+                        android:focusable = "false" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textBDateLayout"
+                    android:hint="Birthdate"
+                    style="@style/MaterialTextInputRight"
+                    app:error = "@{viewModel.errorBirthDate}"
+                    app:errorIconTint="@android:color/transparent"
+                    app:layout_constraintStart_toEndOf="@id/textSexLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textSexLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        clearErrorOnTextChange="@{textBDateLayout}"
+                        android:text="@={viewModel.child.birthDate}"
+                        app:error="@{viewModel.errorBirthDate}"
+                        android:id="@+id/textBdate"
+                        android:focusable="false"
+                        android:inputType="none"
+                        style="@style/MaterialTextInputEdit"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text = "Save"
+                    android:backgroundTint="#51ADE5"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/textBDateLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>
