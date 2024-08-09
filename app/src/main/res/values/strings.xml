@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjectContact</string>
+    <string name="app_name">Nutri Assist</string>
     <string name="parent_info">Parent Info</string>
     <string name="title_activity_bns">BNS</string>
     <string name="title_home">Home</string>
@@ -16,4 +16,5 @@
     <string name="child_s_last_name">Child\'s Last Name</string>
     <string name="child_s_middle_name">Child\'s Middle Name</string>
     <string name="child_s_first_name">Child\'s First Name</string>
+    <string name="title_activity_admin">Admin</string>
 </resources>

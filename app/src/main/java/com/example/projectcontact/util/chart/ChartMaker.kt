@@ -1,5 +1,6 @@
 package com.example.projectcontact.util.chart
 
+import android.graphics.Color
 import android.view.View
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -48,11 +49,33 @@ object ChartMaker {
         }
         pieChart.setCenterTextSize(14f)
         pieChart.animateY(1500)
-
         // Remove legend (color legend in the bottom part of the chart)
         pieChart.legend.isEnabled = false
         pieChart.invalidate()
         return pieChart
+    }
+
+    fun simplePieChart(pieChart : PieChart, textColor: Int, chartColor: Int){
+        val entries = listOf(
+            PieEntry(70f), // Green segment
+            PieEntry(30f) // White segment
+        )
+        val dataSet = PieDataSet(entries, "")
+        dataSet.colors = listOf(chartColor, Color.WHITE)
+        dataSet.valueTextColor = Color.TRANSPARENT
+        dataSet.valueTextSize = 0f
+
+        val pieData = PieData(dataSet)
+        pieChart.data = pieData
+        pieChart.invalidate()
+
+        pieChart.setDrawEntryLabels(false)
+        pieChart.setCenterText("50%")
+        pieChart.legend.isEnabled = false
+        pieChart.setCenterTextColor(textColor)
+        pieChart.setCenterTextSize(18f)
+        pieChart.description.isEnabled = false
+        pieChart.holeRadius = 60f
     }
 
 }

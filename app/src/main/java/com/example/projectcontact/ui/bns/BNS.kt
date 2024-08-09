@@ -25,7 +25,6 @@ class BNS : AppCompatActivity() {
         binding = ActivityBnsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        signIn()
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_bns)
@@ -37,20 +36,6 @@ class BNS : AppCompatActivity() {
             )
         )
         navView.setupWithNavController(navController)
-    }
-
-    fun signIn(){
-        val  auth = FirebaseAuth.getInstance()
-        auth.signInWithEmailAndPassword("mannygendz@gmail.com", "Marva5500$")
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    saveUserId(this, user?.uid!!)
-                } else {
-                    task.exception?.let {
-                    }
-                }
-            }
     }
 
 }

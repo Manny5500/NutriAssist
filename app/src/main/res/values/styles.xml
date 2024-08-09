@@ -39,6 +39,12 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="TextSubTitle" parent="TextTitle">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+    </style>
     <style name="HyperTextView">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
@@ -46,5 +52,26 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/design_default_color_secondary</item>
+    </style>
+
+    <style name="ViewLeft">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+    </style>
+
+    <style name="ViewBetween">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+    </style>
+
+    <style name="ViewRight">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
     </style>
 </resources>
