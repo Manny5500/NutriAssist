@@ -9,7 +9,9 @@ import com.example.projectcontact.R
 import com.example.projectcontact.databinding.ActivityAdminBinding
 import com.example.projectcontact.util.UserPreferences
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Admin : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminBinding
@@ -25,7 +27,6 @@ class Admin : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_admin)
         navView.setupWithNavController(navController)
     }
-
 
     fun signIn(){
         val  auth = FirebaseAuth.getInstance()

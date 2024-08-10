@@ -1,20 +1,16 @@
 package com.example.projectcontact.util.chart
 
-import android.graphics.Color
 import com.example.projectcontact.model.Child
 
 object DashboardPieChart {
-    val lightBlueColor: Int = Color.parseColor("#3498db")
-    val darkBlueColor: Int = Color.parseColor("#2980b9")
-    val whiteColor: Int = Color.parseColor("#FFFFFFFF")
-    val colors1 = intArrayOf(lightBlueColor, darkBlueColor, whiteColor)
-    var cNor = 0
-    var cMal = 0
-    fun count(childList: List<Child>){
-        cNor = 0
-        cMal = 0
-        childList.forEach { child ->
-            if (child.statusdb.contains("Normal")) cNor++ else cMal++
-        }
-    }
+     fun dataList(childList: List<Child>): List<Float>{
+         val (normalChildren, malChildren) = childList.partition { it.statusdb.contains("Normal") }
+         val cN = normalChildren.size.toFloat()
+         val cM = malChildren.size.toFloat()
+         return listOf(cN, cM)
+     }
+
+    val colorList = listOf("#3498db", "#2980b9")
+    const val centerText = "Normal vs Malnourished"
+    val labelList = listOf( "N", "M")
 }

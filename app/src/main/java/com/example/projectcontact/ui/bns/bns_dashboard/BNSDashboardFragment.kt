@@ -9,15 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.projectcontact.MarvaStructure
-import com.example.projectcontact.R
 import com.example.projectcontact.databinding.FragmentBnsDashboardBinding
 import com.example.projectcontact.model.Parent
 import com.example.projectcontact.util.DialogUtil.showDateIntervalDialog
-import com.example.projectcontact.util.chart.ChartMaker.createPieChart
-import com.example.projectcontact.util.chart.DashboardPieChart.cMal
-import com.example.projectcontact.util.chart.DashboardPieChart.cNor
-import com.example.projectcontact.util.chart.DashboardPieChart.colors1
-import com.example.projectcontact.util.chart.DashboardPieChart.count
+import com.example.projectcontact.util.chart.PieChartMaker.dualPieChart
+import com.example.projectcontact.util.chart.DashboardPieChart.centerText
+import com.example.projectcontact.util.chart.DashboardPieChart.colorList
+import com.example.projectcontact.util.chart.DashboardPieChart.dataList
+import com.example.projectcontact.util.chart.DashboardPieChart.labelList
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +29,7 @@ class BNSDashboardFragment : Fragment(), MarvaStructure{
     private  val viewModel: BNSDashboardViewModel by viewModels()
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,11 +50,7 @@ class BNSDashboardFragment : Fragment(), MarvaStructure{
     @SuppressLint("SetTextI18n")
     override fun observers() {
         viewModel.childList.observe(viewLifecycleOwner) {
-            count(it)
-            createPieChart(
-                binding.root, R.id.rTBod,
-                colors1, cNor, cMal, cNor + cMal, "Normal vs Malnourished"
-            )
+            dualPieChart(binding.rTBod, dataList(it), labelList, colorList, centerText)
         }
         viewModel.dateChange.observe(viewLifecycleOwner){
             binding.dateText.text  = viewModel.fromDate.get().toString() +

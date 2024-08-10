@@ -25,7 +25,7 @@ object FirestoreModule {
     @Singleton
     @ChildCollection
     fun provideChildCollection(firestore: FirebaseFirestore):CollectionReference{
-        return firestore.collection("child")
+        return firestore.collection("children")
     }
 
     @Provides
