@@ -4,7 +4,6 @@ import com.example.projectcontact.util.status.StatusFinderImpl
 
 class HFA_Boys {
     fun HFA_Boys_M(height: Double, ages: Int): String {
-        var status = "Null"
         val age = ages - 24
         val negasd3 = doubleArrayOf(
             78.0, 78.6, 79.3, 79.9,
@@ -84,10 +83,9 @@ class HFA_Boys {
             121.2, 121.9, 122.6, 123.2
         )
         val stunted = StatusFinderImpl()
-        status = stunted.HFAStatus(
+        return stunted.HFAStatus(
             age, height, negasd3, negasd2, negasd1, median,
             posisd1, posisd2, posisd3
         )
-        return status
     }
 }

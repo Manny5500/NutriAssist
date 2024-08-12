@@ -5,12 +5,11 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectcontact.databinding.DialogDateIntervalBinding
+import com.example.projectcontact.databinding.DialogDateIntervalGenericBinding
 import com.example.projectcontact.databinding.DialogDeleteChildBinding
 import com.example.projectcontact.databinding.DialogPdfViewerBinding
 import com.example.projectcontact.databinding.DialogSearchParentBinding
@@ -157,6 +156,43 @@ object DialogUtil {
         dialog.setOnDismissListener {
             viewModel.cancel()
         }
+    }
+
+
+    fun showDateIntervalDialogGeneric(
+        context: Context,
+        listener: OnSetButtonClickListener
+    ){
+        val binding = DialogDateIntervalGenericBinding.inflate(LayoutInflater.from(context))
+        val dialog = Dialog(context).apply{
+            setContentView(binding.root)
+            window?.setLayout(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+            show()
+        }
+        binding.dateFrom.setOnClickListener {
+            showDatePickerDialog(binding.dateFrom, context)
+        }
+
+        binding.dateTo.setOnClickListener {
+            showDatePickerDialog(binding.dateTo, context)
+        }
+
+        binding.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        binding.btnSet.setOnClickListener{
+            listener.onClick(binding.dateFrom.text.toString(), binding.dateTo.text.toString())
+            dialog.dismiss()
+        }
+
+    }
+
+    interface OnSetButtonClickListener{
+        fun onClick(dateFrom: String, dateTo: String)
     }
 
 }

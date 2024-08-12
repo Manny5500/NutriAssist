@@ -2,14 +2,17 @@ package com.example.projectcontact.util
 
 import android.annotation.SuppressLint
 import com.google.firebase.Timestamp
-import java.text.DateFormat
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalAdjusters
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
 
 object DateUtil {
 
@@ -46,7 +49,7 @@ object DateUtil {
     //convert 07/17/2020 --> real Date
     @SuppressLint("SimpleDateFormat")
     fun toDateFormate(dateString : String ): Date {
-        val dateFormat: DateFormat = SimpleDateFormat("d/M/yyyy")
+        val dateFormat = SimpleDateFormat("d/M/yyyy")
         return dateFormat.parse(dateString)
     }
 
@@ -60,15 +63,21 @@ object DateUtil {
     val yearNow = yearString.toInt()
     val monthsWith31Days = setOf("01", "03", "05", "07", "08", "10", "12")
     val monthsWith30Days = setOf("04", "06", "09", "11")
+    @SuppressLint("SimpleDateFormat")
+    val sdf2 = SimpleDateFormat("MM-dd")
+    @SuppressLint("SimpleDateFormat")
+    val sdf3 = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
+    //sdf3.timeZone = TimeZone.getTimeZone("GMT+08:00")
+    val zoneId = ZoneId.of("GMT+08:00")
 
 
     fun convertToTimeStamp(dateString: String, toOrfrom: String): Timestamp {
         var date = sdf.parse(dateString)
         if (toOrfrom == "to") {
             val calendar: Calendar = Calendar.getInstance()
-            calendar.setTime(date)
+            calendar.time = date
             calendar.add(Calendar.DAY_OF_MONTH, 1)
-            date = calendar.getTime()
+            date = calendar.time
         }
         return Timestamp(date)
     }
@@ -91,6 +100,63 @@ object DateUtil {
                 else "28/$monthString/$yearString"
             }
         }
+    }
+
+    fun getDateRange(startDate: Date, endDate: Date): List<Date> {
+        val calendar = Calendar.getInstance()
+        calendar.time = startDate
+
+        val dates = mutableListOf<Date>()
+        while (calendar.time.before(endDate) || calendar.time.equals(endDate)) {
+            dates.add(calendar.time)
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        return dates
+    }
+
+    //--> any timestamps will be on midnight
+    fun toMidnight(timestamp: Long): Long {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = timestamp
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.timeInMillis
+    }
+
+
+    //---start days becuase the end date is the current date
+    fun getStartDateRange(date: LocalDate, daysToAdd: Long) : Date{
+        val endDate = date.minusDays(daysToAdd)
+        return Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+    }
+
+
+    fun getFirstDayoftheMonth(date: LocalDate): Date {
+        val firstDay = date.with(TemporalAdjusters.firstDayOfMonth())
+        val firstDayZoned = ZonedDateTime.of(firstDay.atStartOfDay(), zoneId)
+        return Date.from(firstDayZoned.toInstant())
+    }
+
+    fun getLastDayoftheMonth(date: LocalDate): Date{
+        val lastDay = date.with(TemporalAdjusters.lastDayOfMonth())
+        val lastDayZoned = ZonedDateTime.of(lastDay.atStartOfDay(), zoneId)
+        return Date.from(lastDayZoned.toInstant())
+    }
+
+
+    fun getFirstDayOfYear(date: LocalDate): Date {
+        val firstDay = date.with(TemporalAdjusters.firstDayOfYear())
+        val firstDayZoned = ZonedDateTime.of(firstDay.atStartOfDay(), zoneId)
+        return Date.from(firstDayZoned.toInstant())
+    }
+
+    fun getLastDayOfYear(date: LocalDate): Date {
+        val lastDay = date.with(TemporalAdjusters.lastDayOfYear())
+        val lastDayZoned = ZonedDateTime.of(lastDay.atStartOfDay(), zoneId)
+        return Date.from(lastDayZoned.toInstant())
     }
 
 }

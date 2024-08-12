@@ -4,19 +4,450 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.admin_analytics.AdminAnalyticsFragment">
+    android:background="@drawable/nutriassist_bg_"
+    tools:context=".ui.admin.Admin">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="74dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parentConstraint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                style = "@style/ChartContainer"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/lineChartHolder">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/labelTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="Malnourished Cases"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@id/labelTotalCase"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textStyle="bold">
+                    </TextView>
+                    <TextView
+                        android:textSize="25sp"
+                        android:id="@+id/labelTotalCase"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="50"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/labelTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/labelObservation">
+                    </TextView>
+                    <TextView
+                        android:textSize="16sp"
+                        android:id="@+id/labelObservation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="18% less than previous 7 days"
+                        app:layout_constraintTop_toBottomOf="@id/labelTotalCase"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+                    </TextView>
+
+                    <Switch
+                        android:id="@+id/switchToggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        app:layout_constraintTop_toBottomOf="@id/labelObservation"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/lineChart"
+                        android:text="Whole Period"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChart"
+                        android:layout_width="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_height="250dp"
+                        app:layout_constraintTop_toBottomOf="@id/switchToggle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                style ="@style/ChartContainer"
+                app:layout_constraintTop_toBottomOf="@id/lineChartHolder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/categoryCasesHolder">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/textMonthCases"
+                        style="@style/TextChartTitle"
+                        android:text="Malnourished Cases per Category"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/barLine"/>
+
+                    <View
+                        android:id="@+id/barLine"
+                        style="@style/BarLineforChart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textMonthCases"
+                        app:layout_constraintBottom_toTopOf="@id/barChart"/>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barChart"
+                        style="@style/ChartLayoutSize"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/barLine"
+                        app:layout_constraintBottom_toTopOf="@id/tableLayout">
+                    </com.github.mikephil.charting.charts.BarChart>
+
+                    <TableLayout
+                        android:id="@+id/tableLayout"
+                        style="@style/ChartTable"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/barChart"
+                        app:layout_constraintBottom_toTopOf="@id/categorySeeMore">
+                    </TableLayout>
+
+                    <TextView
+                        android:id="@+id/categorySeeMore"
+                        style = "@style/ChartSeeMore"
+                        app:layout_constraintTop_toBottomOf="@id/tableLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                style="@style/ChartContainer"
+                app:layout_constraintTop_toBottomOf="@id/categoryCasesHolder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/pieChartHolder">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/textSexCases"
+                        android:text="Malnourished Cases per Sex"
+                        style="@style/TextChartTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/barLine2"/>
+
+                    <View
+                        android:id="@+id/barLine2"
+                        style="@style/BarLineforChart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textSexCases"
+                        app:layout_constraintBottom_toTopOf="@id/pieChart"/>
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChart"
+                        style="@style/ChartLayoutSize"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/barLine2"
+                        app:layout_constraintBottom_toTopOf="@id/sextableLayout"/>
+
+                    <TableLayout
+                        android:id="@+id/sextableLayout"
+                        style="@style/ChartTable"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/pieChart"
+                        app:layout_constraintBottom_toTopOf="@id/genderSeeMore">
+                    </TableLayout>
+
+                    <TextView
+                        android:id="@+id/genderSeeMore"
+                        style="@style/ChartSeeMore"
+                        app:layout_constraintTop_toBottomOf="@id/sextableLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text=">> See More" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                style="@style/ChartContainer"
+                app:layout_constraintTop_toBottomOf="@id/pieChartHolder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/topBarangayHolder">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/textCategoryCases"
+                        android:text="Top Malnourished Barangay"
+                        style="@style/TextChartTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/barLine3"/>
+
+                    <View
+                        android:id="@+id/barLine3"
+                        style="@style/BarLineforChart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textCategoryCases"
+                        app:layout_constraintBottom_toTopOf="@id/tableLayout3"/>
+
+                    <TableLayout
+                        android:id="@+id/tableLayout3"
+                        style = "@style/ChartTable"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/barLine3"
+                        app:layout_constraintBottom_toTopOf="@id/barangaySeeMore">
+                    </TableLayout>
+
+                    <TextView
+                        android:id="@+id/barangaySeeMore"
+                        style="@style/ChartSeeMore"
+                        app:layout_constraintTop_toBottomOf="@id/tableLayout3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                style="@style/ChartContainer"
+                app:layout_constraintTop_toBottomOf="@id/topBarangayHolder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/agesHolder">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/textAgeCases"
+                        android:text="Malnourished Cases per Ages"
+                        style="@style/TextChartTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/barLine4"/>
+
+                    <View
+                        android:id="@+id/barLine4"
+                        style="@style/BarLineforChart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textAgeCases"
+                        app:layout_constraintBottom_toTopOf="@id/barChart2"/>
+
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barChart2"
+                        style = "@style/ChartLayoutSize"
+                        app:layout_constraintBottom_toTopOf="@id/agesSeeMore"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/barLine4" />
+
+                    <TextView
+                        android:id="@+id/agesSeeMore"
+                        style="@style/ChartSeeMore"
+                        app:layout_constraintTop_toBottomOf="@id/barChart2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/equalizer"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toBottomOf="@id/agesHolder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/DateTabCard"
+        android:id="@+id/dateTab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:cardCornerRadius="15sp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                style="@style/DateTabText"
+                android:id="@+id/dateWeeks"
+                app:layout_constraintHorizontal_weight="1"
+                android:text="Weeks"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/dateMonth"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/DateTabText"
+                app:layout_constraintHorizontal_weight="1"
+                android:id="@+id/dateMonth"
+                android:text="Month"
+                app:layout_constraintEnd_toStartOf="@id/dateYear"
+                app:layout_constraintStart_toEndOf="@id/dateWeeks"
+                app:layout_constraintTop_toTopOf="@id/dateWeeks" />
+
+            <TextView
+                style="@style/DateTabText"
+                app:layout_constraintHorizontal_weight="1"
+                android:background="@drawable/textview_selector"
+                android:id="@+id/dateYear"
+                android:text="Year"
+                app:layout_constraintEnd_toStartOf="@id/dateOptions"
+                app:layout_constraintStart_toEndOf="@id/dateMonth"
+                app:layout_constraintTop_toTopOf="@id/dateMonth" />
+            <ImageView
+                app:layout_constraintHorizontal_weight="0.3"
+                android:src="@drawable/more"
+                android:id="@+id/dateOptions"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/dateYear"
+                app:layout_constraintTop_toTopOf="@id/dateYear">
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:visibility="gone"
+        android:id="@+id/dateRangeTab"
+        style="@style/DateTabCard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="15sp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/blueColor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <TextView
+                android:background="@color/blueColor"
+                style="@style/DateTabText"
+                android:textColor="@color/white"
+                app:layout_constraintHorizontal_weight="1"
+                android:id="@+id/dateRange"
+                app:layout_constraintEnd_toStartOf="@id/dateRangeOptions"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                app:layout_constraintHorizontal_weight="0.1"
+                android:src="@drawable/more"
+                android:id="@+id/dateRangeOptions"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/dateRange"
+                app:layout_constraintTop_toTopOf="@id/dateRange"
+                app:tint="@color/white">
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
