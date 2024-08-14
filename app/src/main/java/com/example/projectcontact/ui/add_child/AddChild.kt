@@ -33,7 +33,6 @@ class AddChild : AppCompatActivity() {
         } else {
             intent.getParcelableExtra<Parent>("parent")!!
         }
-
     }
 
     private fun event(){

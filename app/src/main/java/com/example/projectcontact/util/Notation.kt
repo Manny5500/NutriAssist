@@ -7,7 +7,7 @@ object Notation {
         return when(stats){
             "" -> "N"
             "Normal" -> "N"
-            "Underweight" -> "SW"
+            "Underweight" -> "UW"
             "Severe Underweight" -> "SUW"
             "Stunted" -> "ST"
             "Severe Stunted" -> "SST"
