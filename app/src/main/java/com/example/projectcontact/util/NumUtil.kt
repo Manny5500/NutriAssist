@@ -1,5 +1,6 @@
 package com.example.projectcontact.util
 
+import android.annotation.SuppressLint
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -16,5 +17,10 @@ object NumUtil {
                 roundedUp
             }
         }
+    }
+
+    @SuppressLint("DefaultLocale")
+    fun percentage(number: Float, size: Float) : String{
+        return String.format("%.2f", number/size * 100)
     }
 }

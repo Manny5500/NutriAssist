@@ -112,7 +112,7 @@
                     android:id="@+id/textExamined"
                     android:textSize="18sp"
                     style="@style/ViewLeft"
-                    android:text="Examined"
+                    android:text="Normal"
                     android:gravity="center"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/textExamined"

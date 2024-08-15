@@ -2,7 +2,9 @@ package com.example.projectcontact.ui.admin.admin_analytics
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.Color.parseColor
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,7 @@ import com.example.projectcontact.util.DialogUtil.showDateIntervalDialogGeneric
 import com.example.projectcontact.util.chart.LineChartMaker.simpleLineChart
 import com.example.projectcontact.R
 import com.example.projectcontact.util.Notation.statsNotation
+import com.example.projectcontact.util.TableUtil.generateTable
 import com.example.projectcontact.util.chart.BarChartMaker.simpleBarChart
 import com.example.projectcontact.util.chart.PieChartMaker.dualPieChart
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,23 +47,35 @@ class AdminAnalyticsFragment : Fragment(), MarvaStructure, DialogUtil.OnSetButto
         super.onDestroyView()
         _binding = null
     }
-
     override fun observers() {
-        viewModel.lineChartData.observe(viewLifecycleOwner){
-            simpleLineChart(binding.lineChart, it.first, it.second)
+
+        viewModel.historicalDataDemographics.observe(viewLifecycleOwner){
+            simpleLineChart(binding.lineChart, it.lineChartData.first, it.lineChartData.second)
+            binding.labelTotalCase.text = it.currentTotalCase.toString()
+            binding.labelObservation.text = it.observation
+            binding.labelObservation.setTextColor(parseColor(it.observationColorString))
         }
 
-        viewModel.pieChartData.observe(viewLifecycleOwner){
-            dualPieChart(binding.pieChart, listOf(it.first, it.second),
-                listOf("M", "F"), listOf("#3498db", "#2980b9"), "Male vs Female")
-        }
-        viewModel.barChart1Data.observe(viewLifecycleOwner){ pair ->
-            simpleBarChart(binding.barChart, pair.first, pair.second.map { statsNotation(it) })
+        viewModel.genderDemographics.observe(viewLifecycleOwner){
+            dualPieChart(binding.pieChart, listOf(it.pieChartData.first, it.pieChartData.second),
+                listOf("M", "F"), listOf("#3498db", "#2980b9"), "Gender Distribution")
+            generateTable(requireContext(), binding.sextableLayout, arrayOf("Gender", "Total", "Percentage"), it.tableData)
         }
 
-        viewModel.barChart2Data.observe(viewLifecycleOwner){pair->
-            simpleBarChart(binding.barChart2, pair.first, pair.second)
+        viewModel.statusDemographics.observe(viewLifecycleOwner){
+            simpleBarChart(binding.barChart, it.barChartData.first, it.barChartData.second.map{s-> statsNotation(s)})
+            generateTable(requireContext(), binding.tableLayout, arrayOf("Category", "Total"), it.tableData)
         }
+
+        viewModel.ageDemographics.observe(viewLifecycleOwner){
+            simpleBarChart(binding.barChart2, it.barChartData.first, it.barChartData.second)
+            generateTable(requireContext(), binding.agesTable, arrayOf("Age Group", "Total"), it.tableData)
+        }
+
+        viewModel.barangayDemographics.observe(viewLifecycleOwner){
+            generateTable(requireContext(), binding.tableLayout3, arrayOf("Barangay", "Total"), it.tableData)
+        }
+
         viewModel.periodType.observe(viewLifecycleOwner){
             when(it){
                 "week" -> updateDateTabUI(7, binding.dateWeeks)
@@ -69,13 +84,9 @@ class AdminAnalyticsFragment : Fragment(), MarvaStructure, DialogUtil.OnSetButto
                 "custom" -> showDateRangeTab()
             }
         }
-        viewModel.tableData.observe(viewLifecycleOwner){
-
-        }
         viewModel.dateRangeVal.observe(viewLifecycleOwner){
             binding.dateRange.text  = it
         }
-
         viewModel.hideDateRangeTab.observe(viewLifecycleOwner){
             if(it) hideDateRangeTab()
         }

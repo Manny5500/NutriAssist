@@ -7,5 +7,6 @@ interface UserRepo {
     suspend fun getUser(userId: String) : User
     suspend fun requestDeletion(userId: String)
     suspend fun unrequestDeletion(userId: String)
+    suspend fun getUsers() : List<User>
 
 }

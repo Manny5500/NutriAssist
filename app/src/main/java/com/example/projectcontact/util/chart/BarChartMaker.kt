@@ -1,6 +1,5 @@
 package com.example.projectcontact.util.chart
 
-import android.util.Log
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis

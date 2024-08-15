@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.projectcontact.model.Parent
 import com.example.projectcontact.repository.parent.ParentRepo
 import com.example.projectcontact.util.ValidationUtil
-import com.example.projectcontact.util.ValidationUtil.checkedDaysDiff
 import com.example.projectcontact.util.ValidationUtil.isContactNoValid
 import com.example.projectcontact.util.ValidationUtil.isGmailValid
 import com.example.projectcontact.util.ValidationUtil.isNameValid

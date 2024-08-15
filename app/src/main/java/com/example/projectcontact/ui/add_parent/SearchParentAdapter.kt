@@ -14,7 +14,7 @@ class SearchParentAdapter(private val listener : OnItemClickListener) : ListAdap
     // for searching purpose
     private var originalList: List<Parent> = emptyList()
 
-    var count = 0
+    private var count = 0
     override fun submitList(list: List<Parent>?) {
         super.submitList(list)
         if(count==0){

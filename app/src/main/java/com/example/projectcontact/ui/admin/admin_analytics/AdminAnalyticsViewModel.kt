@@ -6,20 +6,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectcontact.model.Child
+import com.example.projectcontact.model.demographics.AgeDemographics
+import com.example.projectcontact.model.demographics.BarangayDemographics
+import com.example.projectcontact.model.demographics.GenderDemographics
+import com.example.projectcontact.model.demographics.HistoricalDataDemographics
+import com.example.projectcontact.model.demographics.StatusDemographics
 import com.example.projectcontact.repository.child.ChildRepo
 import com.example.projectcontact.util.AgeUtil.monthsBetweenToday
-import com.example.projectcontact.util.BarangayUtil
+import com.example.projectcontact.util.DataValues
+import com.example.projectcontact.util.DataValues.statusList
 import com.example.projectcontact.util.DateUtil
+import com.example.projectcontact.util.DateUtil.dateToLocalDate
 import com.example.projectcontact.util.DateUtil.getDateRange
+import com.example.projectcontact.util.DateUtil.getPreviousEndDateRange
+import com.example.projectcontact.util.DateUtil.getPreviousStartDateRange
 import com.example.projectcontact.util.DateUtil.getStartDateRange
+import com.example.projectcontact.util.DateUtil.subtractTwoDates
 import com.example.projectcontact.util.DateUtil.toDateFormate
 import com.example.projectcontact.util.DateUtil.toMidnight
+import com.example.projectcontact.util.NumUtil.percentage
 import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Date
 import javax.inject.Inject
+import kotlin.math.abs
 
 
 @HiltViewModel
@@ -28,20 +40,22 @@ class AdminAnalyticsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var childList: List<Child> = emptyList()
-    private val _lineChartData = MutableLiveData<Pair<List<Float>, List<String>>>()
-    val lineChartData : LiveData<Pair<List<Float>, List<String>>> = _lineChartData
+    private var previousChildList : List<Child> = emptyList()
 
-    private val _pieChartData = MutableLiveData<Pair<Float, Float>>()
-    val pieChartData : LiveData<Pair<Float, Float>> = _pieChartData
+    private val _historicalDemographics = MutableLiveData<HistoricalDataDemographics>()
+    val historicalDataDemographics : LiveData<HistoricalDataDemographics> = _historicalDemographics
 
-    private val _barChart1Data = MutableLiveData<Pair<List<Float>, List<String>>>()
-    val barChart1Data : LiveData<Pair<List<Float>, List<String>>> = _barChart1Data
+    private val _genderDemographics = MutableLiveData<GenderDemographics>()
+    val genderDemographics : LiveData<GenderDemographics> = _genderDemographics
 
-    private val _barChart2Data = MutableLiveData<Pair<List<Float>, List<String>>>()
-    val barChart2Data : LiveData<Pair<List<Float>, List<String>>> = _barChart2Data
+    private val _statusDemographics = MutableLiveData<StatusDemographics>()
+    val statusDemographics : LiveData<StatusDemographics> = _statusDemographics
 
-    private val _tableData = MutableLiveData<Pair<List<Int>, List<String>>>()
-    val tableData : LiveData<Pair<List<Int>, List<String>>> = _tableData
+    private val _ageDemographics = MutableLiveData<AgeDemographics>()
+    val ageDemographics : LiveData<AgeDemographics> = _ageDemographics
+
+    private val _barangayDemographics = MutableLiveData<BarangayDemographics>()
+    val barangayDemographics : LiveData<BarangayDemographics> = _barangayDemographics
 
     private val _periodType = MutableLiveData<String>().apply {
         value = "week"
@@ -54,12 +68,12 @@ class AdminAnalyticsViewModel @Inject constructor(
     }
     val dateRangeVal : LiveData<String> = _dateRangeVal
 
-
     private val _hideDateRangeTab = MutableLiveData<Boolean>().apply{
         value = true
     }
     val hideDateRangeTab : LiveData<Boolean> = _hideDateRangeTab
 
+    private var daysToSubtract: Long = 7
     private lateinit var startDate: Date
     private lateinit var endDate: Date
     private lateinit var dateList: List<Date>
@@ -77,11 +91,13 @@ class AdminAnalyticsViewModel @Inject constructor(
         startDate = toDateFormate(dateFrom)
         endDate = toDateFormate(dateTo)
         dateList = getDateRange(startDate, endDate)
+        daysToSubtract = subtractTwoDates(endDate, startDate)
         getChildren()
     }
 
-    fun setDataByPeriodDate(daysToAdd: Long){
-        startDate = getStartDateRange(LocalDate.now(), daysToAdd)
+    fun setDataByPeriodDate(daysToSubtract: Long){
+        this.daysToSubtract = daysToSubtract
+        startDate = getStartDateRange(LocalDate.now(), this.daysToSubtract)
         endDate = Date()
         dateList = getDateRange(startDate, endDate)
         getChildren()
@@ -91,72 +107,130 @@ class AdminAnalyticsViewModel @Inject constructor(
         viewModelScope.launch{
             try {
                 childList = childRepo.getChildren(Timestamp(startDate), Timestamp(endDate))
-                _lineChartData.value = getLineChartData()
-                _pieChartData.value = getPieChartData()
-                _barChart1Data.value = getBarChart1Data()
-                _barChart2Data.value = getBarChart2Data()
-                _tableData.value = getTableData()
+                val previousStartDate = getPreviousStartDateRange(dateToLocalDate(endDate), daysToSubtract)
+                val previousEndDate = getPreviousEndDateRange(dateToLocalDate(endDate), daysToSubtract)
+                previousChildList = childRepo.getChildren(Timestamp(previousStartDate), Timestamp(previousEndDate))
+                setHistoricalDataDemographics()
+                setGenderDemographics()
+                setStatusDemographics()
+                setAgeDemographics()
+                setBarangayDemographics()
             }catch(e: Exception){
                 Log.e("MyApp", "Failed to get children $e")
             }
         }
     }
-    private fun getLineChartData() : Pair<List<Float>, List<String>> {
-        val hello = childList.filter { it.dateAdded in startDate..endDate }
+
+    private fun setHistoricalDataDemographics(){
+        val filteredList = childList.filter { it.dateAdded in startDate..endDate }
         val dataList = mutableListOf<Float>()
         val labelList = mutableListOf<String>()
 
+
         dateList.forEach { date ->
             val midnightDate = toMidnight(date.time)
-            val count = hello.count { child -> toMidnight(child.dateAdded.time) == midnightDate }
+            val count = filteredList.count { child -> toMidnight(child.dateAdded.time) == midnightDate }
             dataList.add(count.toFloat())
             labelList.add(DateUtil.sdf2.format(midnightDate))
         }
-        return Pair(dataList, labelList)
-    }
 
-    private fun getPieChartData() : Pair<Float, Float>{
-        val maleCount = childList.filter {it.sex == "Male"}.size.toFloat()
-        val femaleCount = childList.filter {it.sex == "Female"}.size.toFloat()
-        return Pair(maleCount, femaleCount)
-    }
-
-    private fun getBarChart1Data() :  Pair<List<Float>, List<String>> {
-        val list = mutableListOf<Float>()
-        val status = listOf("Underweight", "Severe Underweight", "Overweight",
-            "Stunted", "Severe Stunted", "Wasted", "Severe Wasted")
-        for( s in status){
-            list.add(childList.filter{it.statusdb.contains(s)}.size.toFloat())
+        val a = filteredList.size > previousChildList.size
+        val b = filteredList.size < previousChildList.size
+        val c = filteredList.isEmpty()
+        val d = previousChildList.isEmpty()
+        val statusColor = when{
+            a && d -> "#000000"
+            b && c-> "#000000"
+            a -> "#FF0000"
+            b -> "#097969"
+            else -> "#000000"
         }
 
-        return Pair(list, status)
+        val size = if(previousChildList.isEmpty()) 1  else previousChildList.size
+        val difference = abs(filteredList.size - previousChildList.size)
+        val percentage = difference.toFloat()/size * 100
+
+        val observation = when{
+            a && d -> "-"
+            b && c -> "-"
+            a -> "$percentage % more than the previous $daysToSubtract days"
+            b -> "$percentage % less than the previous $daysToSubtract days"
+            else -> "Just as the same"
+        }
+
+        _historicalDemographics.value = HistoricalDataDemographics(
+            Pair(dataList, labelList),
+            filteredList.size,
+            previousChildList.size,
+            observation,
+            statusColor
+        )
     }
 
-    private fun getBarChart2Data() : Pair<List<Float>, List<String>>{
+    private fun setGenderDemographics(){
+        val size = childList.size.toFloat()
+        val maleCount = childList.filter {it.sex == "Male"}.size.toFloat()
+        val femaleCount = childList.filter {it.sex == "Female"}.size.toFloat()
+        val array = Array(2) { arrayOf<String>()}
+        array[0] = arrayOf("Male", maleCount.toInt().toString(),  percentage(maleCount, size))
+        array[1] = arrayOf("Female",femaleCount.toInt().toString(),  percentage(femaleCount, size) )
+        _genderDemographics.value = GenderDemographics(
+            Pair(maleCount, femaleCount),
+            array
+        )
+    }
+
+    private fun setStatusDemographics(){
+        val list = mutableListOf<Float>()
+        statusList.forEach{ s->
+            list.add(childList.filter{it.statusdb.contains(s)}.size.toFloat())
+        }
+        _statusDemographics.value = StatusDemographics(
+            Pair(list, statusList),
+            twoColumnsTableData(7, statusList, list)
+        )
+    }
+    private fun setAgeDemographics(){
         val list = mutableListOf<Float>()
         val ageGroup = listOf("0-5", "6-11", "12-23", "24-35", "36-47", "48-59")
-        val ageThreshold = listOf(-1, 6, 5, 12, 11, 24, 23, 36, 35, 48, 47, 60)
+        val ageThreshold = listOf(0, 5, 6, 11, 12, 23, 24, 35, 36, 47, 48, 59)
         for(i in ageThreshold.indices step 2){
             list.add(childList.filter{
                 val age = monthsBetweenToday(toDateFormate(it.birthDate))
-                age > ageThreshold[i] && age < ageThreshold[i+1]}
+                age in ageThreshold[i] .. ageThreshold[i+1]}
                 .size
                 .toFloat())
         }
-        return Pair(list, ageGroup)
+        _ageDemographics.value = AgeDemographics(
+            Pair(list, ageGroup),
+            twoColumnsTableData(6, ageGroup, list)
+        )
+
     }
 
-
-    private fun getTableData() : Pair<List<Int>, List<String>>{
+    private fun setBarangayDemographics(){
         val list = mutableListOf<Pair<Int, String>>()
-        val barangayList = BarangayUtil.barangay
-        barangayList.forEach {barangay->
+        DataValues.barangay.forEach {barangay->
             val count = childList.filter{it.barangay==barangay}.size
             list.add(Pair(count,barangay))
         }
         list.sortByDescending { it.first}
-        val top6 = list.take(6)
-        return Pair(top6.map { it.first }, top6.map{it.second})
+        //not use the generic twoColumnsTableData because different dataStructure
+        val array = Array(6) { arrayOf<String>() }
+        for(i in array.indices){
+            array[i] = arrayOf(list[i].second, list[i].first.toString())
+        }
+        _barangayDemographics.value = BarangayDemographics(array)
     }
 
+    private fun twoColumnsTableData(
+        size: Int, labelList: List<String>, dataList: List<Float>
+    ) : Array<Array<String>>
+    {
+        val array = Array(size) { arrayOf<String>()}
+        for(i in array.indices){
+            array[i] = arrayOf(labelList[i], dataList[i].toInt().toString())
+        }
+        return array
+    }
 }

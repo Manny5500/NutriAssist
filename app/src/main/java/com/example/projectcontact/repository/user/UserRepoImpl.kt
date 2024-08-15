@@ -3,6 +3,7 @@ package com.example.projectcontact.repository.user
 import android.util.Log
 import com.example.projectcontact.di.scope.IoDispatcher
 import com.example.projectcontact.di.scope.UserCollection
+import com.example.projectcontact.model.Child
 import com.example.projectcontact.model.User
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.coroutines.CoroutineDispatcher
@@ -60,6 +61,16 @@ class UserRepoImpl @Inject constructor(
                 Log.e("MyApp", "Failed to unrequest deletion $e")
             }
 
+        }
+    }
+
+    override suspend fun getUsers(): List<User> =
+    withContext(ioDispatcher){
+        val snapshot = userCollection.get().await()
+        snapshot.documents.map{
+            it.toObject(User::class.java)!!.copy(
+                id = it.id
+            )
         }
     }
 

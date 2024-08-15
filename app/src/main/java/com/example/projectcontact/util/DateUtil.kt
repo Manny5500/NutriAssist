@@ -39,7 +39,7 @@ object DateUtil {
     }
 
     //Jul 2024
-    fun currentMonthYear() : String{
+    private fun currentMonthYear() : String{
         val currentDate = LocalDate.now()
         val formatter =
             DateTimeFormatter.ofPattern("MMM yyyy")
@@ -49,26 +49,26 @@ object DateUtil {
     //convert 07/17/2020 --> real Date
     @SuppressLint("SimpleDateFormat")
     fun toDateFormate(dateString : String ): Date {
-        val dateFormat = SimpleDateFormat("d/M/yyyy")
-        return dateFormat.parse(dateString)
+        return sdf.parse(dateString)
     }
 
     @SuppressLint("SimpleDateFormat")
     val sdf = SimpleDateFormat("d/M/yyyy")
+    @SuppressLint("SimpleDateFormat")
     val sdf1 = SimpleDateFormat("dd/MM/yyyy")
     val month = currentMonthYear()
-    val dateNow: String = getStartDateLoading()
-    val monthString = dateNow.substring(3, 5)
-    val yearString = dateNow.substring(6, 10)
-    val yearNow = yearString.toInt()
-    val monthsWith31Days = setOf("01", "03", "05", "07", "08", "10", "12")
-    val monthsWith30Days = setOf("04", "06", "09", "11")
+    private val dateNow: String = getStartDateLoading()
+    private val monthString = dateNow.substring(3, 5)
+    private val yearString = dateNow.substring(6, 10)
+    private val yearNow = yearString.toInt()
+    private val monthsWith31Days = setOf("01", "03", "05", "07", "08", "10", "12")
+    private val monthsWith30Days = setOf("04", "06", "09", "11")
     @SuppressLint("SimpleDateFormat")
     val sdf2 = SimpleDateFormat("MM-dd")
     @SuppressLint("SimpleDateFormat")
     val sdf3 = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy")
     //sdf3.timeZone = TimeZone.getTimeZone("GMT+08:00")
-    val zoneId = ZoneId.of("GMT+08:00")
+    private val zoneId = ZoneId.of("GMT+08:00")
 
 
     fun convertToTimeStamp(dateString: String, toOrfrom: String): Timestamp {
@@ -82,7 +82,11 @@ object DateUtil {
         return Timestamp(date)
     }
 
-    fun getStartDateLoading(): String {
+    fun subtractTwoDates(date1: Date, date2: Date): Long {
+        val diffInMillis = date1.time - date2.time
+        return diffInMillis / (1000 * 60 * 60 * 24)
+    }
+    private fun getStartDateLoading(): String {
         val date = Date()
         return sdf1.format(date)
     }
@@ -126,13 +130,26 @@ object DateUtil {
         return calendar.timeInMillis
     }
 
+    fun dateToLocalDate(date: Date): LocalDate {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+    }
+
 
     //---start days becuase the end date is the current date
-    fun getStartDateRange(date: LocalDate, daysToAdd: Long) : Date{
-        val endDate = date.minusDays(daysToAdd)
+    fun getStartDateRange(date: LocalDate, daysToSubtract: Long) : Date{
+        val endDate = date.minusDays(daysToSubtract)
         return Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
     }
 
+    fun getPreviousEndDateRange(date: LocalDate, daysToSubtract: Long) : Date{
+        val startDate = date.minusDays(daysToSubtract+1)
+        return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+    }
+
+    fun getPreviousStartDateRange(date: LocalDate, daysToSubtract: Long) : Date{
+        val endDate = date.minusDays(daysToSubtract * 2)
+        return Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+    }
 
     fun getFirstDayoftheMonth(date: LocalDate): Date {
         val firstDay = date.with(TemporalAdjusters.firstDayOfMonth())
