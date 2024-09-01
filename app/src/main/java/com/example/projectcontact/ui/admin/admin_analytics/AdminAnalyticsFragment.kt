@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Color.parseColor
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -114,15 +113,15 @@ class AdminAnalyticsFragment : Fragment(), MarvaStructure, DialogUtil.OnSetButto
         popupMenu.menuInflater.inflate(R.menu.date_tab_menu, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.menu_item_1 -> {
+                R.id.navigation_sr_list -> {
                     viewModel.setPeriodType("week", true)
                     true
                 }
-                R.id.menu_item_2 -> {
+                R.id.navigation_sr_consolidated -> {
                     viewModel.setPeriodType("month", true)
                     true
                 }
-                R.id.menu_item_3 ->{
+                R.id.navigation_sr_summary ->{
                     viewModel.setPeriodType("year", true)
                     true
                 }
@@ -162,7 +161,7 @@ class AdminAnalyticsFragment : Fragment(), MarvaStructure, DialogUtil.OnSetButto
 
     private fun setButtonColor(textView: TextView){
         textView.setTextColor(Color.WHITE)
-        textView.setBackgroundColor(Color.parseColor("#51ADE5"))
+        textView.setBackgroundColor(parseColor("#51ADE5"))
     }
 
     private fun showDateRangeTab(){

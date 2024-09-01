@@ -10,4 +10,6 @@ interface ChildRepo {
     suspend fun addChild(child:Child)
     suspend fun getChildren(gmail:String, from:Timestamp, to:Timestamp) : List<Child>
     suspend fun getChildren(from: Timestamp, to:Timestamp) : List<Child>
+    suspend fun getChildren(monthAdded: String, barangay: String): List<Child>
+    suspend fun getChildren(monthAdded: String): List<Child>
 }

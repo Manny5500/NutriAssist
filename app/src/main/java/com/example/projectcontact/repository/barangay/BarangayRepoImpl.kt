@@ -21,4 +21,16 @@ class BarangayRepoImpl @Inject constructor(
             .await()
         snapshot.toObject(Barangay::class.java)!!
     }
+
+    override suspend fun getBarangays(): List<Barangay> = withContext(ioDispatcher) {
+        val snapshot = barangayCollection
+            .whereNotEqualTo("identifier", "All Beneficiaries")
+            .get()
+            .await()
+        snapshot.documents.map{
+            it.toObject(Barangay::class.java)!!.copy(
+                barangay = it.id
+            )
+        }
+    }
 }

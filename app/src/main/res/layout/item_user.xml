@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="user"
+            type="com.example.projectcontact.model.User" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.CardView.Elevated"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15sp"
+        app:cardElevation="10sp"
+        android:layout_margin="4sp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                imageUrl="@{user.imageUrl}"
+                android:layout_marginEnd="10dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/Picture"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000" />
+
+            <TextView
+                android:text="@{user.getFullName()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="?attr/colorPrimary"
+                android:layout_toRightOf="@+id/Picture"
+                android:id="@+id/list_item_name" />
+
+            <TextView
+                android:text="@{user.email}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/list_item_email"
+                android:layout_below="@id/list_item_name"
+                android:layout_toRightOf="@+id/Picture"
+                android:singleLine="true" />
+
+            <TextView
+                android:text="@{user.barangay}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_item_email"
+                android:layout_toRightOf="@+id/Picture"
+                android:id="@+id/list_item_barangay" />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

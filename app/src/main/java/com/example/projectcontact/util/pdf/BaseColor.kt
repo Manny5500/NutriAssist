@@ -9,6 +9,14 @@ object BaseColor {
     val redColor = getBaseColor("#F8858B")
     val orangeColor = getBaseColor("#FFAC4A")
     val purpleColor = getBaseColor("#f0e4f4")
+    val grayColor = getBaseColor("#d3d3d3")
+    val darkerGray = getBaseColor("#c0c0c0")
+    val darkestGray = getBaseColor("#808080")
+    val blueColor = getBaseColor("#2600ff")
+    val peachColor = getBaseColor("#d39885")
+    val paleSilver = getBaseColor("#c4c6bb")
+    val laurelGreen = getBaseColor("#a6aa91")
+    val black: BaseColor = BaseColor.BLACK
 
 
     fun getBaseColor(hexColor: String): BaseColor {

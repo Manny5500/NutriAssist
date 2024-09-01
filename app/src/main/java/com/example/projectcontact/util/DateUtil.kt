@@ -5,6 +5,7 @@ import com.google.firebase.Timestamp
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -174,6 +175,32 @@ object DateUtil {
         val lastDay = date.with(TemporalAdjusters.lastDayOfYear())
         val lastDayZoned = ZonedDateTime.of(lastDay.atStartOfDay(), zoneId)
         return Date.from(lastDayZoned.toInstant())
+    }
+
+    fun dateAdapter() : Array<String> {
+        val currentDate = LocalDate.now()
+        val targetMonth = YearMonth.of(2023, 6)
+        val filteredMonths = ArrayList<String?>()
+        val formatter = DateTimeFormatter.ofPattern("MMM yyyy")
+        var month = targetMonth
+        while (!month.isAfter(YearMonth.from(currentDate))
+        ) {
+            filteredMonths.add(month.atDay(1).format(formatter))
+            month = month.plusMonths(1)
+        }
+        filteredMonths.reverse()
+        val array = Array(filteredMonths.size){""}
+        for(i in array.indices){
+            array[i] = filteredMonths[i] ?: ""
+        }
+        return array
+    }
+
+    fun monthNow(): String {
+        val currentDate = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("MMM yyyy")
+        val formattedDate = currentDate.format(formatter)
+        return formattedDate
     }
 
 }

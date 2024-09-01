@@ -1,5 +1,6 @@
 package com.example.projectcontact.util.chart
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Color.parseColor
 import com.github.mikephil.charting.charts.PieChart
@@ -9,6 +10,7 @@ import com.github.mikephil.charting.data.PieEntry
 
 
 object PieChartMaker {
+    @SuppressLint("DefaultLocale")
     fun dualPieChart(
         pieChart: PieChart, dataList: List<Float>,
         labelList: List<String>, colorStringList: List<String>,
@@ -28,6 +30,7 @@ object PieChartMaker {
         setupPieChartAppearance(pieChart, centerText, centerTextColor,  14f, 60f)
     }
 
+    @SuppressLint("DefaultLocale")
     fun simplePieChart(pieChart: PieChart, dataValue: Float, chartColorString: String, textColorString: String) {
         val chartColor = parseColor(chartColorString)
         val textColor = parseColor(textColorString)

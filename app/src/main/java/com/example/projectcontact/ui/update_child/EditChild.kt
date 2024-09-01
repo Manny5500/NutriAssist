@@ -15,9 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EditChild : AppCompatActivity(), MarvaStructure {
     private val viewModel: EditChildViewModel by viewModels()
     private val historyViewModel: HistoryViewModel by viewModels()
-
     private lateinit var binding: ActivityEditChildBinding
-
     private lateinit var child: Child
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,5 +68,4 @@ class EditChild : AppCompatActivity(), MarvaStructure {
             DialogUtil.showDatePickerDialog(binding.textBdate, this)
         }
     }
-
 }

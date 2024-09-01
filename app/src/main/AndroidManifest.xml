@@ -16,9 +16,17 @@
         android:theme="@style/Theme.ProjectContact"
         tools:targetApi="31">
         <activity
+            android:name=".ui.admin.prevalance_report.PrevalanceReport"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.master_list.MasterList"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.summary_report.SummaryReport"
+            android:exported="false" />
+        <activity
             android:name=".ui.admin.Admin"
-            android:exported="true"
-            android:label="@string/title_activity_admin">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,9 +56,10 @@
             android:exported="false" />
         <activity
             android:name=".ui.bns.BNS"
-            android:exported="false"
-            android:label="@string/title_activity_bns">
-        </activity>
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.admin_users.UserDetails"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

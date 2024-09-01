@@ -18,23 +18,23 @@ object TableUtil {
         data: Array<Array<String>>
     ) {
         clearTable(tableLayout)
-        val headerRow = TableRow(context)
+        if(headers.isNotEmpty()){
+            val headerRow = TableRow(context)
 
-        for (i in headers.indices) {
-            val headerTextView = TextView(context)
-            headerTextView.text = headers[i]
-            Costumize(headerRow, headerTextView)
-            if (i == 0) {
-                headerTextView.gravity = Gravity.START
-            } else {
-                headerTextView.gravity = Gravity.END
+            for (i in headers.indices) {
+                val headerTextView = TextView(context)
+                headerTextView.text = headers[i]
+                Costumize(headerRow, headerTextView)
+                if (i == 0) {
+                    headerTextView.gravity = Gravity.START
+                } else {
+                    headerTextView.gravity = Gravity.END
+                }
+                setTextSizeAndPaddingForTextViews(18f, 16, headerTextView)
+                headerRow.addView(headerTextView)
             }
-            setTextSizeAndPaddingForTextViews(18f, 16, headerTextView)
-            headerRow.addView(headerTextView)
+            tableLayout.addView(headerRow)
         }
-
-        tableLayout.addView(headerRow)
-
 
         // Populate table rows with data
         for (rowData in data) {

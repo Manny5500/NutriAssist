@@ -8,5 +8,9 @@ interface UserRepo {
     suspend fun requestDeletion(userId: String)
     suspend fun unrequestDeletion(userId: String)
     suspend fun getUsers() : List<User>
-
+    suspend fun grantRequestDeletion(userId: String)
+    suspend fun unarchiveUser(userId: String)
+    suspend fun archiveUser(userId: String)
+    suspend fun verifyUser(userId: String)
+    suspend fun resetArchive()
 }

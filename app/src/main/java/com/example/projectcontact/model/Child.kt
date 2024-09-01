@@ -1,6 +1,8 @@
 package com.example.projectcontact.model
 
 import android.os.Parcelable
+import com.example.projectcontact.util.AgeUtil
+import com.example.projectcontact.util.DateUtil
 import kotlinx.parcelize.Parcelize
 import java.util.Date
 
@@ -43,6 +45,10 @@ data class Child(
 
     val parentFullName: String
         get() = "$parentFirstName $parentMiddleName $parentLastName"
+
+    fun getAgeinMonth() :  Int{
+        return AgeUtil.monthsBetweenToday(DateUtil.toDateFormate(birthDate))
+    }
 
 }
 

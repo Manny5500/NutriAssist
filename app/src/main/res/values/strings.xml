@@ -17,4 +17,6 @@
     <string name="child_s_middle_name">Child\'s Middle Name</string>
     <string name="child_s_first_name">Child\'s First Name</string>
     <string name="title_activity_admin">Admin</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

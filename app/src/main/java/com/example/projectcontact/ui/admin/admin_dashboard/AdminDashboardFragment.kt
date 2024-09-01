@@ -1,8 +1,8 @@
 package com.example.projectcontact.ui.admin.admin_dashboard
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,6 @@ import com.example.projectcontact.R
 import com.example.projectcontact.databinding.FragmentAdminDashboardBinding
 import com.example.projectcontact.ui.admin.admin_dashboard.adapter.ProgramAdapter
 import com.example.projectcontact.ui.admin.admin_dashboard.adapter.ReportsAdapter
-import com.example.projectcontact.util.ToastUtil.show
 import com.example.projectcontact.util.chart.PieChartMaker.simplePieChart
 import com.example.projectcontact.util.margin.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,9 +47,6 @@ class AdminDashboardFragment : Fragment(), ReportsAdapter.OnItemClickListener, P
     }
 
     private fun observers(){
-        viewModel.childList.observe(viewLifecycleOwner){
-            it.forEach { child -> Log.d("MyApp", "Child ${child.statusdb}")  }
-        }
 
         viewModel.normalPercentage.observe(viewLifecycleOwner){
             simplePieChart(
@@ -98,7 +94,12 @@ class AdminDashboardFragment : Fragment(), ReportsAdapter.OnItemClickListener, P
     }
 
     override fun onClick(str: String) {
-        show(requireContext(), str)
+
+    }
+
+    override fun onClick(destination: Class<*>) {
+        val intent = Intent(requireContext(), destination)
+        startActivity(intent)
     }
 
 }

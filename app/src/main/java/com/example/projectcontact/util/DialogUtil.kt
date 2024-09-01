@@ -1,13 +1,16 @@
 package com.example.projectcontact.util
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projectcontact.App
 import com.example.projectcontact.databinding.DialogDateIntervalBinding
 import com.example.projectcontact.databinding.DialogDateIntervalGenericBinding
 import com.example.projectcontact.databinding.DialogDeleteChildBinding
@@ -16,9 +19,10 @@ import com.example.projectcontact.databinding.DialogSearchParentBinding
 import com.example.projectcontact.databinding.DialogStatusBinding
 import com.example.projectcontact.model.Child
 import com.example.projectcontact.model.Parent
-import com.example.projectcontact.ui.bns.bns_data.BNSDataViewModel
 import com.example.projectcontact.ui.add_parent.SearchParentAdapter
+import com.example.projectcontact.ui.admin.admin_users.UserDetailsViewModel
 import com.example.projectcontact.ui.bns.bns_dashboard.BNSDashboardViewModel
+import com.example.projectcontact.ui.bns.bns_data.BNSDataViewModel
 import com.example.projectcontact.util.pdf.DisplayPDF
 import com.example.projectcontact.util.pdf.SavePDF
 import com.google.android.material.textfield.TextInputEditText
@@ -190,6 +194,27 @@ object DialogUtil {
         }
 
     }
+
+
+     fun showDeleteAccountDialog(context: Context, viewModel : UserDetailsViewModel, id:String) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Confirmation")
+        builder.setMessage("Allow the user to delete account")
+
+        builder.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
+            viewModel.grantDeletionRequest(id)
+            dialog.dismiss()
+        })
+
+        builder.setNegativeButton("No", DialogInterface.OnClickListener { dialog, which ->
+            viewModel.removeDeletionReequest(id)
+            dialog.dismiss()
+        })
+        val dialog: AlertDialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+    }
+
 
     interface OnSetButtonClickListener{
         fun onClick(dateFrom: String, dateTo: String)

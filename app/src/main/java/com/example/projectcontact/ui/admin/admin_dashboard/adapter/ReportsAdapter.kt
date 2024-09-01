@@ -6,13 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projectcontact.R
 import com.example.projectcontact.databinding.ItemReportsBinding
+import com.example.projectcontact.ui.admin.Admin
+import com.example.projectcontact.ui.admin.master_list.MasterList
+import com.example.projectcontact.ui.admin.prevalance_report.PrevalanceReport
+import com.example.projectcontact.ui.admin.summary_report.SummaryReport
+import com.example.projectcontact.ui.bns.BNS
 
 class ReportsAdapter : RecyclerView.Adapter<ReportsAdapter.ViewHolder>() {
     lateinit var listener: OnItemClickListener
     val list = listOf(
-        Report("Prevalance\nReport", parseColor("#6f80dc"), R.drawable.prevalence),
-        Report("Summary\nReport", parseColor("#0e5aab"), R.drawable.summary),
-        Report("MasterList", parseColor("#50ade6"), R.drawable.masterlist),
+        Report("Prevalance\nReport", parseColor("#6f80dc"),
+            R.drawable.prevalence, PrevalanceReport::class.java),
+        Report("Summary\nReport", parseColor("#0e5aab"),
+            R.drawable.summary, SummaryReport::class.java),
+        Report("MasterList", parseColor("#50ade6"),
+            R.drawable.masterlist, MasterList::class.java),
     )
     inner class ViewHolder (val binding: ItemReportsBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -24,7 +32,7 @@ class ReportsAdapter : RecyclerView.Adapter<ReportsAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ReportsAdapter.ViewHolder, position: Int) {
         holder.binding.report = list[position]
         holder.binding.root.setOnClickListener{
-            listener.onClick(list[position].report)
+            listener.onClick(list[position].destination)
         }
     }
 
@@ -33,11 +41,12 @@ class ReportsAdapter : RecyclerView.Adapter<ReportsAdapter.ViewHolder>() {
     }
 
     interface OnItemClickListener{
-        fun onClick(str: String)
+        fun onClick(destination : Class<*>)
     }
 }
 data class Report (
     var report: String = "",
     var labelColor: Int = 0,
-    var imgResource: Int = 0
+    var imgResource: Int = 0,
+    var destination: Class<*> = Admin::class.java
 )

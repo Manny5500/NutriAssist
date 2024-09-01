@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navi_summary_report"
+    app:startDestination="@+id/navigation_sr_list">
+
+    <fragment
+        android:id="@+id/navigation_sr_list"
+        android:name="com.example.projectcontact.ui.admin.summary_report.SrListFragment"
+        android:label="List"
+        tools:layout="@layout/fragment_sr_list" />
+
+    <fragment
+        android:id="@+id/navigation_sr_conso"
+        android:name="com.example.projectcontact.ui.admin.summary_report.SrConsoFragment"
+        android:label="Consolidated"
+        tools:layout="@layout/fragment_sr_conso" />
+
+    <fragment
+        android:id="@+id/navigation_sr_sum"
+        android:name="com.example.projectcontact.ui.admin.summary_report.SrSumFragment"
+        android:label="Summary"
+        tools:layout="@layout/fragment_sr_sum" />
+</navigation>

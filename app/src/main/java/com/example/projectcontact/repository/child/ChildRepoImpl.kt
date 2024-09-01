@@ -54,6 +54,33 @@ class ChildRepoImpl @Inject constructor(
         }
     }
 
+    override suspend fun getChildren(monthAdded: String, barangay: String): List<Child>
+    = withContext(ioDispatcher){
+        val snapshot = childCollection
+            .whereEqualTo("monthAdded", monthAdded)
+            .whereEqualTo("barangay", barangay)
+            .get()
+            .await()
+        snapshot.documents.map{
+            it.toObject(Child::class.java)!!.copy(
+                id = it.id
+            )
+        }
+    }
+
+    override suspend fun getChildren(monthAdded: String): List<Child>
+            = withContext(ioDispatcher){
+        val snapshot = childCollection
+            .whereEqualTo("monthAdded", monthAdded)
+            .get()
+            .await()
+        snapshot.documents.map{
+            it.toObject(Child::class.java)!!.copy(
+                id = it.id
+            )
+        }
+    }
+
     override suspend fun updateChild(child: Child){
       withContext(ioDispatcher){
           try {
